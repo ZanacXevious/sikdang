@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sikdang/common/const/colors.dart';
+import 'package:sikdang/common/view/splash_screen.dart';
 import 'package:sikdang/user/view/login_screen.dart';
 import 'common/component/custom_text_form_field.dart';
 
@@ -17,7 +18,7 @@ class _App extends StatelessWidget {
         fontFamily: 'NotoSans',
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

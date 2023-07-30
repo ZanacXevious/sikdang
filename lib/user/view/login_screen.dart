@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sikdang/common/component/custom_text_form_field.dart';
 import 'package:sikdang/common/const/colors.dart';
+import 'package:sikdang/common/const/data.dart';
 import 'package:sikdang/common/layout/default_layout.dart';
 
 import '../../common/view/root_tab.dart';
@@ -75,12 +77,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     final resp = await dio.post('http://$ip/auth/login',
                         options: Options(
                             headers: {'authorization': 'Basic $token'}));
+
+                    final refreshToken = resp.data['refreshToken'];
+                    final accessToken = resp.data['accessToken'];
+
+                    await storage.write(
+                        key: REFRESH_TOKEN_KEY, value: refreshToken);
+                    await storage.write(
+                        key: ACCESS_TOKEN_KEY, value: accessToken);
+
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => RootTab(),
                       ),
                     );
-                    print(resp.data);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: PRIMARY_COLOR,
